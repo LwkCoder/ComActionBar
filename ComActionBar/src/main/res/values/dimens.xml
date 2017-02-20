@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cab_menu_min_size">48dp</dimen>
+    <dimen name="cab_back_drawable_width">12dp</dimen>
+    <dimen name="cab_back_drawable_height">20dp</dimen>
+    <dimen name="cab_back_drawable_padding">4dp</dimen>
+    <dimen name="cab_text_padding">8dp</dimen>
+    <dimen name="cab_text_size">16sp</dimen>
+    <dimen name="cab_title_size">18sp</dimen>
+</resources>

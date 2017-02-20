@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/activity_main"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.lwkandroid.widget.ComActionBar
+        android:id="@+id/cab_main01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:is_left_as_back="true"
+        app:right_text01="呵呵"
+        app:right_text02="哈哈"
+        app:title_text="测试标题"/>
+
+    <com.lwkandroid.widget.ComActionBar
+        android:id="@+id/cab_main02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:bg_color="@android:color/holo_orange_dark"
+        app:left_text="嘿哈"
+        app:right_image01="@drawable/cab_right01"
+        app:right_image02="@drawable/cab_right02"
+        app:title_text="标了个题"/>
+
+    <com.lwkandroid.widget.ComActionBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:bg_color="@android:color/holo_orange_dark"
+        app:is_left_as_back="true"
+        app:left_image="@drawable/cab_left"
+        app:left_text="good"
+        app:left_text_color="@android:color/holo_purple"
+        app:title_text="Title"
+        app:title_text_color="@android:color/holo_red_dark"
+        app:right_image01="@drawable/cab_right01"
+        app:right_image02="@drawable/cab_right02"
+        app:right_text01="HEHE"
+        app:right_text02="HAHA"
+        app:right_text_color01="@android:color/holo_green_dark"
+        app:right_text_color02="@android:color/holo_green_dark"
+        />
+
+</LinearLayout>
