@@ -17,8 +17,7 @@ import android.widget.TextView;
 
 /**
  * Created by LWK
- * TODO 通用自定义ActionBar
- * 2016/11/10
+ * TODO Common ActionBar
  */
 public class ComActionBar extends FrameLayout
 {
@@ -59,18 +58,18 @@ public class ComActionBar extends FrameLayout
     //初始化自定义属性
     private void initParams(Context context, AttributeSet attrs)
     {
-        boolean isLeftAsBack = false;//左侧是否为返回
-        String leftText = null;//左侧文案
-        int leftImageResId = 0;//左侧图片
-        String title = null;//标题
-        String rightText01 = null;//右边第一个文案
-        int rightImageResId01 = 0;//右边第一个图片
-        String rightText02 = null;//右边第二个文案
-        int rightImageResId02 = 0;//右边第二个图片
-        int titleTextColor = Color.WHITE;//标题文字颜色
-        int leftTextColor = Color.WHITE;//左边文字颜色
-        int rightTextColor01 = Color.WHITE;//右边第一个文字颜色
-        int rightTextColor02 = Color.WHITE;//右边第二个文字颜色
+        boolean isLeftAsBack = false;
+        String leftText = null;
+        int leftImageResId = 0;
+        String title = null;
+        String rightText01 = null;
+        int rightImageResId01 = 0;
+        String rightText02 = null;
+        int rightImageResId02 = 0;
+        int titleTextColor = Color.WHITE;
+        int leftTextColor = Color.WHITE;
+        int rightTextColor01 = Color.WHITE;
+        int rightTextColor02 = Color.WHITE;
         int bgColor = context.getApplicationContext().getResources().getColor(R.color.colorPrimary);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComActionBar);
@@ -150,7 +149,7 @@ public class ComActionBar extends FrameLayout
             setRightImage02(rightImageResId02);
     }
 
-    //引用左侧textview
+    //inflate TextView in the left area
     private void inflateLeftTextView()
     {
         if (mTvLeft == null)
@@ -161,7 +160,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左边为返回功能
+     * set function:click left area as back/finish
      */
     public void setLeftAsBack()
     {
@@ -172,7 +171,7 @@ public class ComActionBar extends FrameLayout
         drawable.setBounds(0, 0, width, height);
         mTvLeft.setCompoundDrawables(drawable, null, null, null);
         mTvLeft.setCompoundDrawablePadding(getResources().getDimensionPixelOffset(R.dimen.cab_back_drawable_padding));
-        if (TextUtils.isEmpty(mTvLeft.getText()))//没有设置文案就默认给“返回”
+        if (TextUtils.isEmpty(mTvLeft.getText()))//set default text
             mTvLeft.setText(R.string.cab_back);
         if (getContext() instanceof Activity)
         {
@@ -188,7 +187,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左侧文案
+     * set text of the TextView in left area
      */
     public void setLeftText(String text)
     {
@@ -197,7 +196,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左侧文案
+     * set text resource id of the TextView in left area
      */
     public void setLeftText(int resId)
     {
@@ -206,7 +205,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左侧文案文字颜色
+     * set text color of the TextView in left area
      *
      * @param color
      */
@@ -216,7 +215,7 @@ public class ComActionBar extends FrameLayout
         mTvLeft.setTextColor(color);
     }
 
-    //引用左侧ImageView
+    //inflate ImageView in the left area
     private void inflateLeftImage()
     {
         if (mImgLeft == null)
@@ -227,7 +226,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左侧图片
+     * set image's resource id in left area
      */
     public void setLeftImage(int imgResId)
     {
@@ -236,7 +235,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左侧图片
+     * set image drawable in left area
      */
     public void setLeftImage(Drawable drawable)
     {
@@ -245,7 +244,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左侧图片
+     * set image bitmap in left area
      */
     public void setLeftImage(Bitmap bitmap)
     {
@@ -254,8 +253,8 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左侧点击事件
-     * R.id.fl_comactionbar_left
+     * set onClickListener of the left area
+     * [View's id : R.id.fl_comactionbar_left]
      */
     public void setLeftClickListener(OnClickListener listener)
     {
@@ -263,14 +262,14 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置左侧背景
+     * set background's resource id of the left area
      */
     public void setLeftBackground(int resId)
     {
         mViewLeft.setBackgroundResource(resId);
     }
 
-    //引用标题TextView
+    //inflate the TextView of title
     private void inflateTitleTextView()
     {
         if (mTvTitle == null)
@@ -281,7 +280,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置标题
+     * set title's resource id
      */
     public void setTitle(int resId)
     {
@@ -290,7 +289,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置标题
+     * set title text
      */
     public void setTitle(String title)
     {
@@ -299,7 +298,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置标题文字颜色
+     * set title text color
      *
      * @param color
      */
@@ -309,7 +308,7 @@ public class ComActionBar extends FrameLayout
         mTvTitle.setTextColor(color);
     }
 
-    //引用右边第一个TextView
+    //inflate the first TextView in the right area
     private void inflateRightTextView01()
     {
         if (mTvRight01 == null)
@@ -320,7 +319,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第一个文案
+     * set text resource id of the first TextView in the right area
      */
     public void setRightText01(int resId)
     {
@@ -329,7 +328,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第一个文案
+     * set text of the first TextView in right area
      */
     public void setRightText01(String text)
     {
@@ -338,7 +337,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第一个文案文字颜色
+     * set text color of the first TextView in right area
      *
      * @param color
      */
@@ -348,7 +347,7 @@ public class ComActionBar extends FrameLayout
         mTvRight01.setTextColor(color);
     }
 
-    //引用右边第二个TextView
+    //infalte the second TextView in right area
     private void inflateRightTextView02()
     {
         if (mTvRight02 == null)
@@ -359,7 +358,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第二个文案
+     * set text resource id of the TextView in the right area
      */
     public void setRightText02(int resId)
     {
@@ -368,7 +367,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第二个文案
+     * set text of the TextView in right area
      */
     public void setRightText02(String text)
     {
@@ -377,7 +376,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第二个文案文字颜色
+     * set text color of the TextView in right area
      *
      * @param color
      */
@@ -387,7 +386,7 @@ public class ComActionBar extends FrameLayout
         mTvRight02.setTextColor(color);
     }
 
-    //引用右边第一个ImageView
+    //inflate the first ImageView in the right area
     private void inflateRightImageView01()
     {
         if (mImgRight01 == null)
@@ -398,7 +397,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第一个图片
+     * set image resource id of the first ImageView in the right area
      */
     private void setRightImage01(int resId)
     {
@@ -407,7 +406,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第一个图片
+     * set image drawable of the first ImageView in the right area
      */
     private void setRightImage01(Drawable drawable)
     {
@@ -416,7 +415,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第一个图片
+     * set image bitmap of the first ImageView in the right area
      */
     private void setRightImage01(Bitmap bitmap)
     {
@@ -425,7 +424,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第一个区域背景
+     * set backgroud resource id of the first area in the right
      */
     public void setRightBackgroud01(int resId)
     {
@@ -433,15 +432,15 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第一个区域点击事件
-     * R.id.fl_comactionbar_right01
+     * set onClickListener of the first area in the right
+     * [View's id : R.id.fl_comactionbar_right01]
      */
     public void setRightClickListener01(OnClickListener listener)
     {
         mViewRight01.setOnClickListener(listener);
     }
 
-    //引用右边第二个ImageView
+    //inflate the second ImageView in the right area
     private void inflateRightImageView02()
     {
         if (mImgRight02 == null)
@@ -452,7 +451,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第二个图片
+     * set image resource id of the second ImageView in the right area
      */
     private void setRightImage02(int resId)
     {
@@ -461,7 +460,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第二个图片
+     * set image drawable of the second ImageView in the right area
      */
     private void setRightImage02(Drawable drawable)
     {
@@ -470,7 +469,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第二个图片
+     * set image bitmap of the second ImageView in the right area
      */
     private void setRightImage02(Bitmap bitmap)
     {
@@ -479,7 +478,7 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置第二个区域背景
+     * set backgroud resource id of the second area in the right
      */
     public void setRightBackgroud02(int resId)
     {
@@ -487,8 +486,8 @@ public class ComActionBar extends FrameLayout
     }
 
     /**
-     * 设置右边第二个区域点击事件
-     * R.id.fl_comactionbar_right02
+     * set onClickListener of the second area in the right
+     * [View's id : R.id.fl_comactionbar_right02]
      */
     public void setRightClickListener02(OnClickListener listener)
     {
