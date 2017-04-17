@@ -8,7 +8,7 @@ ComActionBar：通用的自定义ActionBar
 1.添加Gradle依赖：
 ```
 dependencies{
-         compile 'com.lwkandroid.widget:ComActionBar:1.0.1
+         compile 'com.lwkandroid.widget:ComActionBar:1.0.2
     }
 ```
 <br/>
@@ -32,6 +32,12 @@ dependencies{
         app:right_text_color01="@android:color/holo_green_dark" //设置右侧第一个文案文字颜色
         app:right_text_color02="@android:color/holo_green_dark" //设置右侧第二个文案文字颜色
         />
+```
+<br/>
+###混淆配置：<br/>
+```
+-dontwarn com.lwkandroid.widget.**
+-keep class com.lwkandroid.widget.**{*;}
 ```
 <br/>
 ###效果图:<br/>

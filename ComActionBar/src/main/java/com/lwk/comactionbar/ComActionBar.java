@@ -1,4 +1,4 @@
-package com.lwkandroid.widget;
+package com.lwk.comactionbar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.view.ViewStub;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.lwkandroid.widget.R;
 
 
 /**
