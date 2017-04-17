@@ -14,7 +14,7 @@ dependencies{
 <br/>
 2.xml中可自定义的属性【代码中也有对应的方法】：
 ```
-<com.lwkandroid.widget.ComActionBar
+<com.lwk.comactionbar.ComActionBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
