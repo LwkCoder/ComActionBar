@@ -2,17 +2,20 @@ ComActionBar：通用的自定义ActionBar
 ====
 自定义ActionBar，轻量级的自定义控件
 ------
-<br/>
-<br/>
-###使用方法:<br/>
-1.添加Gradle依赖：
+
+### 使用方法:
+
+**1.添加Gradle依赖：**
+
 ```
 dependencies{
          compile 'com.lwkandroid.widget:ComActionBar:1.0.2
     }
 ```
 <br/>
-2.xml中可自定义的属性【代码中也有对应的方法】：
+
+**2.xml中可自定义的属性【代码中也有对应的方法】：**
+
 ```
 <com.lwk.comactionbar.ComActionBar
         android:layout_width="match_parent"
@@ -34,11 +37,13 @@ dependencies{
         />
 ```
 <br/>
-###混淆配置：<br/>
+
+### 混淆配置：
 ```
--dontwarn com.lwkandroid.widget.**
--keep class com.lwkandroid.widget.**{*;}
+-dontwarn com.lwk.comactionbar.**
+-keep class com.lwk.comactionbar.**{*;}
 ```
 <br/>
-###效果图:<br/>
+
+### 效果图:
 ![](https://github.com/Vanish136/ComActionBar/raw/master/screenshoot/cab_sample.jpg)
