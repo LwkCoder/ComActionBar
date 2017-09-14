@@ -22,25 +22,25 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.android.support:appcompat-v7:${LIB_ANDROID_SUPPORT_VERSION}"
 }
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-version = "1.0.2"
+def lib_name = "ComActionBar";
+version = "1.1.0"
+group = "com.lwkandroid.widget"
 def siteUrl = 'https://github.com/Vanish136/ComActionBar'
 def gitUrl = 'https://github.com/Vanish136/ComActionBar.git'
 def bintrayuser = properties.getProperty("user")
 def bintrayapikey = properties.getProperty("apikey")
-group = "com.lwkandroid.widget"
 
 install {
     repositories.mavenInstaller {
         pom {
             project {
                 packaging 'aar'
-                name 'ComActionBar for Android'
+                name lib_name
                 url siteUrl
                 licenses {
                     license {
@@ -81,13 +81,12 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 javadoc {
-    options{
+    options {
         encoding "UTF-8"
         charSet 'UTF-8'
         author true
         version true
         links "http://docs.oracle.com/javase/7/docs/api"
-        title "ComActionBar 1.0.2"
     }
 }
 
@@ -102,7 +101,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "ComActionBar"
+        name = lib_name
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
