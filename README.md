@@ -50,8 +50,8 @@ ComActionBar：通用的自定义ActionBar
 
 ### 混淆配置：
 ```
--dontwarn com.lwk.comactionbar.**
--keep class com.lwk.comactionbar.**{*;}
+-dontwarn com.lwkandroid.widget.comactionbar.**
+-keep class com.lwkandroid.widget.comactionbar.**{*;}
 ```
 <br/>
 
