@@ -6,18 +6,23 @@ ComActionBar：通用的自定义ActionBar
 ### 使用方法:
 
 **1.添加Gradle依赖：**
+【最新版本号以[这里](https://github.com/Vanish136/ComActionBar/releases)为准】
 
 ```
-dependencies{
-         compile 'com.lwkandroid.widget:ComActionBar:1.1.0
-    }
+    #last-version请查看上面的最新版本号
+
+    #AndroidStudio3.0以下
+    compile 'com.lwkandroid.widget:ComActionBar:last-version'
+
+    #AndroidStudio3.0以上
+    implemetation 'com.lwkandroid.widget:ComActionBar:last-version'
 ```
 <br/>
 
 **2.xml中可自定义的属性【代码中也有对应的方法】：**
 
 ```
-<com.lwk.comactionbar.ComActionBar
+<com.lwkandroid.widget.comactionbar.ComActionBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

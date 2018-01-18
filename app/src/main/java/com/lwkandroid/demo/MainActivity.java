@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.lwk.comactionbar.ComActionBar;
+import com.lwkandroid.widget.comactionbar.ComActionBar;
 
 public class MainActivity extends AppCompatActivity
 {

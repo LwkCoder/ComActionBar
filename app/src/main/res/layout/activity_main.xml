@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.lwk.comactionbar.ComActionBar
+    <com.lwkandroid.widget.comactionbar.ComActionBar
         android:id="@+id/cab_main01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:text_size_title="22sp"
         app:title_text="测试标题"/>
 
-    <com.lwk.comactionbar.ComActionBar
+    <com.lwkandroid.widget.comactionbar.ComActionBar
         android:id="@+id/cab_main02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
