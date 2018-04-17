@@ -83,6 +83,7 @@ public class ComActionBar extends FrameLayout
         int bgColor = getResources().getColor(R.color.colorPrimary);
         titleTextSize = getResources().getDimensionPixelSize(R.dimen.cab_title_size);
         itemTextSize = getResources().getDimensionPixelSize(R.dimen.cab_text_size);
+        int titleMaxLines = 1;
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComActionBar);
         if (ta != null)
@@ -127,6 +128,8 @@ public class ComActionBar extends FrameLayout
                     titleTextSize = ta.getDimension(index, titleTextSize);
                 else if (index == R.styleable.ComActionBar_text_size_item)
                     itemTextSize = ta.getDimension(index, itemTextSize);
+                else if (index == R.styleable.ComActionBar_title_max_lines)
+                    titleMaxLines = ta.getInteger(index, 1);
             }
             ta.recycle();
         }
@@ -153,6 +156,7 @@ public class ComActionBar extends FrameLayout
         {
             setTitle(title);
             setTitleTextColor(titleTextColor);
+            setTitleMaxLines(titleMaxLines);
         }
 
         if (!TextUtils.isEmpty(rightText01))
@@ -362,6 +366,7 @@ public class ComActionBar extends FrameLayout
         if (color > 0)
             mTvTitle.setTextColor(color);
     }
+
 
     //inflate the first TextView in the right area
     private void inflateRightTextView01()
@@ -581,6 +586,16 @@ public class ComActionBar extends FrameLayout
             mTvRight01.setTextSize(unit, size);
         if (mTvRight02 != null)
             mTvRight02.setTextSize(unit, size);
+    }
+
+    public void setTitleMaxLines(int maxLines)
+    {
+        inflateTitleTextView();
+        if (mTvTitle != null)
+        {
+            mTvTitle.setMaxLines(maxLines);
+            mTvTitle.setEllipsize(TextUtils.TruncateAt.valueOf("END"));
+        }
     }
 
 }

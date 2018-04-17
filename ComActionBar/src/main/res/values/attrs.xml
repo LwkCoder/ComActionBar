@@ -11,6 +11,7 @@
         <attr name="text_size_title" format="dimension"/>
         <attr name="text_size_item" format="dimension"/>
         <attr name="title_text" format="string"/>
+        <attr name="title_max_lines" format="integer"/>
         <attr name="right_text01" format="string"/>
         <attr name="right_image01" format="reference"/>
         <attr name="right_text02" format="string"/>

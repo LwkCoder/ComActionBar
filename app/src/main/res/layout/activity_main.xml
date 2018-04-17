@@ -33,4 +33,16 @@
         app:right_image02="@drawable/cab_right02"
         app:title_text="标了个题"/>
 
+    <com.lwkandroid.widget.comactionbar.ComActionBar
+        android:id="@+id/cab_main03"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:bg_color="@android:color/holo_blue_dark"
+        app:is_left_as_back_without_text="true"
+        app:left_text="嘿哈"
+        app:right_image01="@drawable/cab_right01"
+        app:right_image02="@drawable/cab_right02"
+        app:title_text="非常长的标题非常长的标题非常长的标题非常长的标题非常长的标题啊啊啊啊"/>
+
 </LinearLayout>
