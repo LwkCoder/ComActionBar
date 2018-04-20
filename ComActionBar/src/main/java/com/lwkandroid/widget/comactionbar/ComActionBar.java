@@ -36,12 +36,13 @@ public class ComActionBar extends FrameLayout
     protected ImageView mImgRight01;
     protected ImageView mImgRight02;
 
-    private boolean isLeftAsBack = false;
-    boolean isLeftBackWithoutText = false;
-    private int allTextColor = Color.WHITE;
-    private int backDrawableResId = R.drawable.icon_arrow_left;
-    private float titleTextSize;
-    private float itemTextSize;
+    private boolean mIsLeftAsBack = false;
+    boolean mIsLeftBackWithoutText = false;
+    private int mAllTextColor = Color.WHITE;
+    private int mBackDrawableResId = R.drawable.icon_arrow_left;
+    private float mTitleTextSize;
+    private float mItemTextSize;
+    private int mTitleMaxLine = 1;
 
     public ComActionBar(Context context)
     {
@@ -81,9 +82,8 @@ public class ComActionBar extends FrameLayout
         int rightTextColor01 = Color.WHITE;
         int rightTextColor02 = Color.WHITE;
         int bgColor = getResources().getColor(R.color.colorPrimary);
-        titleTextSize = getResources().getDimensionPixelSize(R.dimen.cab_title_size);
-        itemTextSize = getResources().getDimensionPixelSize(R.dimen.cab_text_size);
-        int titleMaxLines = 1;
+        mTitleTextSize = getResources().getDimensionPixelSize(R.dimen.cab_title_size);
+        mItemTextSize = getResources().getDimensionPixelSize(R.dimen.cab_text_size);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComActionBar);
         if (ta != null)
@@ -95,7 +95,7 @@ public class ComActionBar extends FrameLayout
                 if (index == R.styleable.ComActionBar_bg_color)
                     bgColor = ta.getColor(index, bgColor);
                 else if (index == R.styleable.ComActionBar_is_left_as_back)
-                    isLeftAsBack = ta.getBoolean(index, isLeftAsBack);
+                    mIsLeftAsBack = ta.getBoolean(index, mIsLeftAsBack);
                 else if (index == R.styleable.ComActionBar_left_text)
                     leftText = ta.getString(index);
                 else if (index == R.styleable.ComActionBar_left_image)
@@ -119,26 +119,26 @@ public class ComActionBar extends FrameLayout
                 else if (index == R.styleable.ComActionBar_right_text_color02)
                     rightTextColor02 = ta.getColor(index, rightTextColor02);
                 else if (index == R.styleable.ComActionBar_all_text_color)
-                    allTextColor = ta.getColor(index, allTextColor);
+                    mAllTextColor = ta.getColor(index, mAllTextColor);
                 else if (index == R.styleable.ComActionBar_is_left_as_back_without_text)
-                    isLeftBackWithoutText = ta.getBoolean(index, isLeftBackWithoutText);
+                    mIsLeftBackWithoutText = ta.getBoolean(index, mIsLeftBackWithoutText);
                 else if (index == R.styleable.ComActionBar_left_back_drawable)
-                    backDrawableResId = ta.getResourceId(index, backDrawableResId);
+                    mBackDrawableResId = ta.getResourceId(index, mBackDrawableResId);
                 else if (index == R.styleable.ComActionBar_text_size_title)
-                    titleTextSize = ta.getDimension(index, titleTextSize);
+                    mTitleTextSize = ta.getDimension(index, mTitleTextSize);
                 else if (index == R.styleable.ComActionBar_text_size_item)
-                    itemTextSize = ta.getDimension(index, itemTextSize);
+                    mItemTextSize = ta.getDimension(index, mItemTextSize);
                 else if (index == R.styleable.ComActionBar_title_max_lines)
-                    titleMaxLines = ta.getInteger(index, 1);
+                    mTitleMaxLine = ta.getInteger(index, 1);
             }
             ta.recycle();
         }
 
         setBackgroundColor(bgColor);
 
-        if (isLeftBackWithoutText)
-            isLeftAsBack = true;
-        if (isLeftAsBack)
+        if (mIsLeftBackWithoutText)
+            mIsLeftAsBack = true;
+        if (mIsLeftAsBack)
         {
             refreshLeftBackStatus();
         } else
@@ -156,7 +156,7 @@ public class ComActionBar extends FrameLayout
         {
             setTitle(title);
             setTitleTextColor(titleTextColor);
-            setTitleMaxLines(titleMaxLines);
+            setTitleMaxLines(mTitleMaxLine);
         }
 
         if (!TextUtils.isEmpty(rightText01))
@@ -184,19 +184,19 @@ public class ComActionBar extends FrameLayout
         {
             ((ViewStub) findViewById(R.id.vs_comactionbar_left_text)).inflate();
             mTvLeft = (TextView) findViewById(R.id.tv_comactionbar_left);
-            mTvLeft.setTextColor(allTextColor);
-            mTvLeft.setTextSize(TypedValue.COMPLEX_UNIT_PX, itemTextSize);
+            mTvLeft.setTextColor(mAllTextColor);
+            mTvLeft.setTextSize(TypedValue.COMPLEX_UNIT_PX, mItemTextSize);
         }
     }
 
     public void setLeftAsBack()
     {
-        setLeftAsBack(true);
+        setmIsLeftAsBack(true);
     }
 
-    public void setLeftAsBack(boolean b)
+    public void setmIsLeftAsBack(boolean b)
     {
-        this.isLeftAsBack = b;
+        this.mIsLeftAsBack = b;
         refreshLeftBackStatus();
     }
 
@@ -207,30 +207,30 @@ public class ComActionBar extends FrameLayout
 
     public void setLeftAsBackWithoutText(boolean b)
     {
-        this.isLeftBackWithoutText = b;
-        if (isLeftBackWithoutText)
-            this.isLeftAsBack = true;
+        this.mIsLeftBackWithoutText = b;
+        if (mIsLeftBackWithoutText)
+            this.mIsLeftAsBack = true;
         refreshLeftBackStatus();
     }
 
     public void setLeftBackDrawable(int resId)
     {
-        this.backDrawableResId = resId;
+        this.mBackDrawableResId = resId;
         refreshLeftBackStatus();
     }
 
     protected void refreshLeftBackStatus()
     {
         inflateLeftTextView();
-        if (isLeftAsBack)
+        if (mIsLeftAsBack)
         {
-            Drawable drawable = getResources().getDrawable(backDrawableResId);
+            Drawable drawable = getResources().getDrawable(mBackDrawableResId);
             int width = getResources().getDimensionPixelSize(R.dimen.cab_back_drawable_width);
             int height = getResources().getDimensionPixelSize(R.dimen.cab_back_drawable_height);
             drawable.setBounds(0, 0, width, height);
             mTvLeft.setCompoundDrawables(drawable, null, null, null);
             mTvLeft.setCompoundDrawablePadding(getResources().getDimensionPixelOffset(R.dimen.cab_back_drawable_padding));
-            if (!isLeftBackWithoutText)
+            if (!mIsLeftBackWithoutText)
                 mTvLeft.setText(R.string.cab_back);
             else
                 mTvLeft.setText(" ");
@@ -332,8 +332,10 @@ public class ComActionBar extends FrameLayout
         {
             ((ViewStub) findViewById(R.id.vs_comactionbar_title)).inflate();
             mTvTitle = (TextView) findViewById(R.id.tv_comactionbar_title);
-            mTvTitle.setTextColor(allTextColor);
-            mTvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
+            mTvTitle.setTextColor(mAllTextColor);
+            mTvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
+            mTvTitle.setMaxLines(mTitleMaxLine);
+            mTvTitle.setEllipsize(TextUtils.TruncateAt.valueOf("END"));
         }
     }
 
@@ -375,8 +377,8 @@ public class ComActionBar extends FrameLayout
         {
             ((ViewStub) findViewById(R.id.vs_comactionbar_right_text01)).inflate();
             mTvRight01 = (TextView) findViewById(R.id.tv_comactionbar_right01);
-            mTvRight01.setTextColor(allTextColor);
-            mTvRight01.setTextSize(TypedValue.COMPLEX_UNIT_PX, itemTextSize);
+            mTvRight01.setTextColor(mAllTextColor);
+            mTvRight01.setTextSize(TypedValue.COMPLEX_UNIT_PX, mItemTextSize);
         }
     }
 
@@ -417,8 +419,8 @@ public class ComActionBar extends FrameLayout
         {
             ((ViewStub) findViewById(R.id.vs_comactionbar_right_text02)).inflate();
             mTvRight02 = (TextView) findViewById(R.id.tv_comactionbar_right02);
-            mTvRight02.setTextColor(allTextColor);
-            mTvRight02.setTextSize(TypedValue.COMPLEX_UNIT_PX, itemTextSize);
+            mTvRight02.setTextColor(mAllTextColor);
+            mTvRight02.setTextSize(TypedValue.COMPLEX_UNIT_PX, mItemTextSize);
         }
     }
 
@@ -567,7 +569,7 @@ public class ComActionBar extends FrameLayout
 
     public void setTitleTextSize(int unit, float size)
     {
-        this.titleTextSize = TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
+        this.mTitleTextSize = TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
         if (mTvTitle != null)
             mTvTitle.setTextSize(unit, size);
     }
@@ -579,7 +581,7 @@ public class ComActionBar extends FrameLayout
 
     public void setItemTextSize(int unit, float size)
     {
-        this.itemTextSize = TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
+        this.mItemTextSize = TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
         if (mTvLeft != null)
             mTvLeft.setTextSize(unit, size);
         if (mTvRight01 != null)
@@ -590,12 +592,17 @@ public class ComActionBar extends FrameLayout
 
     public void setTitleMaxLines(int maxLines)
     {
-        inflateTitleTextView();
+        this.mTitleMaxLine = maxLines;
         if (mTvTitle != null)
         {
             mTvTitle.setMaxLines(maxLines);
             mTvTitle.setEllipsize(TextUtils.TruncateAt.valueOf("END"));
         }
+    }
+
+    public int getTitleMaxLines()
+    {
+        return mTitleMaxLine;
     }
 
 }

@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity
                 showToast("嘿嘿");
             }
         });
+
+        ComActionBar actionBar03 = (ComActionBar) findViewById(R.id.cab_main03);
+        actionBar03.setTitle("超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题");
     }
 
     private void showToast(String msg)

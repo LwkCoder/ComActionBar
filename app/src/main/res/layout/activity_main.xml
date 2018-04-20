@@ -42,7 +42,6 @@
         app:is_left_as_back_without_text="true"
         app:left_text="嘿哈"
         app:right_image01="@drawable/cab_right01"
-        app:right_image02="@drawable/cab_right02"
-        app:title_text="非常长的标题非常长的标题非常长的标题非常长的标题非常长的标题啊啊啊啊"/>
+        app:right_image02="@drawable/cab_right02"/>
 
 </LinearLayout>
