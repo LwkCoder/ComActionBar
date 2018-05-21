@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/ll_comactionbar_right_container"
-        android:layout_toRightOf="@+id/fl_comactionbar_left"
+        android:layout_marginLeft="@dimen/cab_menu_min_size"
+        android:layout_marginRight="@dimen/cab_menu_min_size"
         android:layout="@layout/viewstub_comactionbar_title_text"/>
 
     <LinearLayout
