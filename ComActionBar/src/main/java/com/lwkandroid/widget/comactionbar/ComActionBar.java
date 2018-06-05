@@ -256,8 +256,7 @@ public class ComActionBar extends FrameLayout
     public void setLeftTextColor(int color)
     {
         inflateLeftTextView();
-        if (color > 0)
-            mTvLeft.setTextColor(color);
+        mTvLeft.setTextColor(color);
     }
 
     public void setLeftText(String text)
@@ -365,8 +364,7 @@ public class ComActionBar extends FrameLayout
     public void setTitleTextColor(int color)
     {
         inflateTitleTextView();
-        if (color > 0)
-            mTvTitle.setTextColor(color);
+        mTvTitle.setTextColor(color);
     }
 
 
@@ -408,8 +406,7 @@ public class ComActionBar extends FrameLayout
     public void setRightTextColor01(int color)
     {
         inflateRightTextView01();
-        if (color > 0)
-            mTvRight01.setTextColor(color);
+        mTvRight01.setTextColor(color);
     }
 
     //infalte the second TextView in right area
@@ -450,8 +447,7 @@ public class ComActionBar extends FrameLayout
     public void setRightTextColor02(int color)
     {
         inflateRightTextView02();
-        if (color > 0)
-            mTvRight02.setTextColor(color);
+        mTvRight02.setTextColor(color);
     }
 
     //inflate the first ImageView in the right area
