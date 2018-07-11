@@ -601,4 +601,53 @@ public class ComActionBar extends FrameLayout
         return mTitleMaxLine;
     }
 
+    public View getLeftAreaView()
+    {
+        return mViewLeft;
+    }
+
+    public TextView getTvLeft()
+    {
+        return mTvLeft;
+    }
+
+    public ImageView getImgLeft()
+    {
+        return mImgLeft;
+    }
+
+    public TextView getTvTitle()
+    {
+        return mTvTitle;
+    }
+
+    public View getRightAreaView01()
+    {
+        return mViewRight01;
+    }
+
+    public View getRightAreaView02()
+    {
+        return mViewRight02;
+    }
+
+    public TextView getTvRight01()
+    {
+        return mTvRight01;
+    }
+
+    public TextView getTvRight02()
+    {
+        return mTvRight02;
+    }
+
+    public ImageView getImgRight01()
+    {
+        return mImgRight01;
+    }
+
+    public ImageView getImgRight02()
+    {
+        return mImgRight02;
+    }
 }
