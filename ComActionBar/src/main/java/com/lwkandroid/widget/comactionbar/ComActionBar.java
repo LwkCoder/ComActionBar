@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -93,43 +94,63 @@ public class ComActionBar extends FrameLayout
             {
                 int index = ta.getIndex(i);
                 if (index == R.styleable.ComActionBar_bg_color)
+                {
                     bgColor = ta.getColor(index, bgColor);
-                else if (index == R.styleable.ComActionBar_is_left_as_back)
+                } else if (index == R.styleable.ComActionBar_is_left_as_back)
+                {
                     mIsLeftAsBack = ta.getBoolean(index, mIsLeftAsBack);
-                else if (index == R.styleable.ComActionBar_left_text)
+                } else if (index == R.styleable.ComActionBar_left_text)
+                {
                     leftText = ta.getString(index);
-                else if (index == R.styleable.ComActionBar_left_image)
+                } else if (index == R.styleable.ComActionBar_left_image)
+                {
                     leftImageResId = ta.getResourceId(index, leftImageResId);
-                else if (index == R.styleable.ComActionBar_title_text)
+                } else if (index == R.styleable.ComActionBar_title_text)
+                {
                     title = ta.getString(index);
-                else if (index == R.styleable.ComActionBar_right_text01)
+                } else if (index == R.styleable.ComActionBar_right_text01)
+                {
                     rightText01 = ta.getString(index);
-                else if (index == R.styleable.ComActionBar_right_image01)
+                } else if (index == R.styleable.ComActionBar_right_image01)
+                {
                     rightImageResId01 = ta.getResourceId(index, rightImageResId01);
-                else if (index == R.styleable.ComActionBar_right_text02)
+                } else if (index == R.styleable.ComActionBar_right_text02)
+                {
                     rightText02 = ta.getString(index);
-                else if (index == R.styleable.ComActionBar_right_image02)
+                } else if (index == R.styleable.ComActionBar_right_image02)
+                {
                     rightImageResId02 = ta.getResourceId(index, rightImageResId02);
-                else if (index == R.styleable.ComActionBar_title_text_color)
+                } else if (index == R.styleable.ComActionBar_title_text_color)
+                {
                     titleTextColor = ta.getColor(index, titleTextColor);
-                else if (index == R.styleable.ComActionBar_left_text_color)
+                } else if (index == R.styleable.ComActionBar_left_text_color)
+                {
                     leftTextColor = ta.getColor(index, leftTextColor);
-                else if (index == R.styleable.ComActionBar_right_text_color01)
+                } else if (index == R.styleable.ComActionBar_right_text_color01)
+                {
                     rightTextColor01 = ta.getColor(index, rightTextColor01);
-                else if (index == R.styleable.ComActionBar_right_text_color02)
+                } else if (index == R.styleable.ComActionBar_right_text_color02)
+                {
                     rightTextColor02 = ta.getColor(index, rightTextColor02);
-                else if (index == R.styleable.ComActionBar_all_text_color)
+                } else if (index == R.styleable.ComActionBar_all_text_color)
+                {
                     mAllTextColor = ta.getColor(index, mAllTextColor);
-                else if (index == R.styleable.ComActionBar_is_left_as_back_without_text)
+                } else if (index == R.styleable.ComActionBar_is_left_as_back_without_text)
+                {
                     mIsLeftBackWithoutText = ta.getBoolean(index, mIsLeftBackWithoutText);
-                else if (index == R.styleable.ComActionBar_left_back_drawable)
+                } else if (index == R.styleable.ComActionBar_left_back_drawable)
+                {
                     mBackDrawableResId = ta.getResourceId(index, mBackDrawableResId);
-                else if (index == R.styleable.ComActionBar_text_size_title)
+                } else if (index == R.styleable.ComActionBar_text_size_title)
+                {
                     mTitleTextSize = ta.getDimension(index, mTitleTextSize);
-                else if (index == R.styleable.ComActionBar_text_size_item)
+                } else if (index == R.styleable.ComActionBar_text_size_item)
+                {
                     mItemTextSize = ta.getDimension(index, mItemTextSize);
-                else if (index == R.styleable.ComActionBar_title_max_lines)
+                } else if (index == R.styleable.ComActionBar_title_max_lines)
+                {
                     mTitleMaxLine = ta.getInteger(index, 1);
+                }
             }
             ta.recycle();
         }
@@ -137,7 +158,9 @@ public class ComActionBar extends FrameLayout
         setBackgroundColor(bgColor);
 
         if (mIsLeftBackWithoutText)
+        {
             mIsLeftAsBack = true;
+        }
         if (mIsLeftAsBack)
         {
             refreshLeftBackStatus();
@@ -149,7 +172,9 @@ public class ComActionBar extends FrameLayout
                 setLeftTextColor(leftTextColor);
             }
             if (leftImageResId != 0)
+            {
                 setLeftImage(leftImageResId);
+            }
         }
 
         if (!TextUtils.isEmpty(title))
@@ -166,7 +191,9 @@ public class ComActionBar extends FrameLayout
         }
 
         if (rightImageResId01 != 0)
+        {
             setRightImage01(rightImageResId01);
+        }
 
         if (!TextUtils.isEmpty(rightText02))
         {
@@ -175,7 +202,9 @@ public class ComActionBar extends FrameLayout
         }
 
         if (rightImageResId02 != 0)
+        {
             setRightImage02(rightImageResId02);
+        }
     }
 
     protected void inflateLeftTextView()
@@ -209,7 +238,9 @@ public class ComActionBar extends FrameLayout
     {
         this.mIsLeftBackWithoutText = b;
         if (mIsLeftBackWithoutText)
+        {
             this.mIsLeftAsBack = true;
+        }
         refreshLeftBackStatus();
     }
 
@@ -231,9 +262,12 @@ public class ComActionBar extends FrameLayout
             mTvLeft.setCompoundDrawables(drawable, null, null, null);
             mTvLeft.setCompoundDrawablePadding(getResources().getDimensionPixelOffset(R.dimen.cab_back_drawable_padding));
             if (!mIsLeftBackWithoutText)
+            {
                 mTvLeft.setText(R.string.cab_back);
-            else
+            } else
+            {
                 mTvLeft.setText(" ");
+            }
 
             if (getContext() instanceof Activity)
             {
@@ -242,7 +276,13 @@ public class ComActionBar extends FrameLayout
                     @Override
                     public void onClick(View v)
                     {
-                        ((Activity) getContext()).finish();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                        {
+                            ((Activity) getContext()).finishAfterTransition();
+                        } else
+                        {
+                            ((Activity) getContext()).finish();
+                        }
                     }
                 });
             }
@@ -567,7 +607,9 @@ public class ComActionBar extends FrameLayout
     {
         this.mTitleTextSize = TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
         if (mTvTitle != null)
+        {
             mTvTitle.setTextSize(unit, size);
+        }
     }
 
     public void setItemTextSize(float size)
@@ -579,11 +621,17 @@ public class ComActionBar extends FrameLayout
     {
         this.mItemTextSize = TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
         if (mTvLeft != null)
+        {
             mTvLeft.setTextSize(unit, size);
+        }
         if (mTvRight01 != null)
+        {
             mTvRight01.setTextSize(unit, size);
+        }
         if (mTvRight02 != null)
+        {
             mTvRight02.setTextSize(unit, size);
+        }
     }
 
     public void setTitleMaxLines(int maxLines)
