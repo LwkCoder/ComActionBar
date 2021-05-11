@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cab_child_padding_vertical_default">14dp</dimen>
+    <dimen name="cab_child_padding_horizontal_default">8dp</dimen>
+    <dimen name="cab_divider_line_height_default">1px</dimen>
+    <dimen name="cab_menu_text_size_default">12sp</dimen>
+    <dimen name="cab_title_text_size_default">14sp</dimen>
+    <dimen name="cab_min_height">40dp</dimen>
+</resources>

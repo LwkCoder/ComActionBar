@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cab_text_color_default">#FFFFFF</color>
+    <color name="cab_divider_line_default">#FCF4F4F6</color>
+    <color name="cab_pressed_color_default">#25000000</color>
+</resources>

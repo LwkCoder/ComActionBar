@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/cab_min_height">
+
+    <TextView
+        android:id="@+id/tv_actionbar_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="@dimen/cab_menu_text_size_default"
+        app:layout_constraintBottom_toTopOf="@+id/view_actionbar_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:paddingBottom="@dimen/cab_child_padding_vertical_default"
+        tools:paddingEnd="@dimen/cab_child_padding_horizontal_default"
+        tools:paddingStart="@dimen/cab_child_padding_horizontal_default"
+        tools:paddingTop="@dimen/cab_child_padding_vertical_default"
+        tools:text="Back" />
+
+    <TextView
+        android:id="@+id/tv_actionbar_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:marqueeRepeatLimit="-1"
+        android:singleLine="true"
+        android:textSize="@dimen/cab_title_text_size_default"
+        app:layout_constraintBottom_toTopOf="@+id/view_actionbar_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:paddingBottom="@dimen/cab_child_padding_vertical_default"
+        tools:paddingEnd="@dimen/cab_child_padding_horizontal_default"
+        tools:paddingStart="@dimen/cab_child_padding_horizontal_default"
+        tools:paddingTop="@dimen/cab_child_padding_vertical_default"
+        tools:text="title" />
+
+    <TextView
+        android:id="@+id/tv_actionbar_right02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="@dimen/cab_menu_text_size_default"
+        app:layout_constraintBottom_toTopOf="@+id/view_actionbar_divider"
+        app:layout_constraintEnd_toStartOf="@+id/tv_actionbar_right01"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:paddingBottom="@dimen/cab_child_padding_vertical_default"
+        tools:paddingEnd="@dimen/cab_child_padding_horizontal_default"
+        tools:paddingStart="@dimen/cab_child_padding_horizontal_default"
+        tools:paddingTop="@dimen/cab_child_padding_vertical_default"
+        tools:text="Right02" />
+
+    <TextView
+        android:id="@+id/tv_actionbar_right01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="@dimen/cab_menu_text_size_default"
+        app:layout_constraintBottom_toTopOf="@+id/view_actionbar_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:paddingBottom="@dimen/cab_child_padding_vertical_default"
+        tools:paddingEnd="@dimen/cab_child_padding_horizontal_default"
+        tools:paddingStart="@dimen/cab_child_padding_horizontal_default"
+        tools:paddingTop="@dimen/cab_child_padding_vertical_default"
+        tools:text="Right01" />
+
+    <View
+        android:id="@+id/view_actionbar_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cab_divider_line_height_default"
+        android:background="@color/cab_divider_line_default"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

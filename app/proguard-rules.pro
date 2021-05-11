@@ -1,6 +1,3 @@
-#ComActionBar
--dontwarn com.lwk.comactionbar.**
--keep class com.lwk.comactionbar.**{*;}
 
 #---------------------------------基本指令区-------------------------------
 #代码混淆的压缩比例，值在0-7之间

@@ -1,1 +1,1 @@
-include ':app', ':ComActionBar'
+include ':app', ':library'
