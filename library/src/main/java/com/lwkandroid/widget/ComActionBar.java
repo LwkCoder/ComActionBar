@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -270,7 +271,13 @@ public class ComActionBar extends FrameLayout
         this.mIsLeftClickToFinish = enable;
         if (mIsLeftClickToFinish && getContext() instanceof Activity)
         {
-            mTvLeft.setOnClickListener(v -> ((Activity) getContext()).finish());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            {
+                mTvLeft.setOnClickListener(v -> ((Activity) getContext()).finishAfterTransition());
+            } else
+            {
+                mTvLeft.setOnClickListener(v -> ((Activity) getContext()).finish());
+            }
         }
     }
 
@@ -485,6 +492,31 @@ public class ComActionBar extends FrameLayout
                 mRightOnItemClickListener02.onActionBarItemClicked(mTvRight02.getId(), mTvRight02, mViewDivider);
             }
         });
+    }
+
+    public TextView getTvLeft()
+    {
+        return mTvLeft;
+    }
+
+    public TextView getTvTitle()
+    {
+        return mTvTitle;
+    }
+
+    public TextView getTvRight01()
+    {
+        return mTvRight01;
+    }
+
+    public TextView getTvRight02()
+    {
+        return mTvRight02;
+    }
+
+    public View getViewDivider()
+    {
+        return mViewDivider;
     }
 
     private void updateRippleEffect()
