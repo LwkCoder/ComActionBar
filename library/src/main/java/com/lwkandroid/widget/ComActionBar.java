@@ -91,50 +91,50 @@ public class ComActionBar extends FrameLayout
         mTvRight02 = findViewById(R.id.tv_actionbar_right02);
         mViewDivider = findViewById(R.id.view_actionbar_divider);
 
-        final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComActionBar2);
-        mIsRippleEffect = ta.getBoolean(R.styleable.ComActionBar2_ripple_effect, true);
-        mPressedColor = ta.getColor(R.styleable.ComActionBar2_pressed_color,
+        final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComActionBar);
+        mIsRippleEffect = ta.getBoolean(R.styleable.ComActionBar_ripple_effect, true);
+        mPressedColor = ta.getColor(R.styleable.ComActionBar_pressed_color,
                 Utils.getColorResources(context, R.color.cab_pressed_color_default));
-        mLeftText = ta.getString(R.styleable.ComActionBar2_left_text);
-        mLeftTextColor = ta.getColor(R.styleable.ComActionBar2_left_text_color,
+        mLeftText = ta.getString(R.styleable.ComActionBar_left_text);
+        mLeftTextColor = ta.getColor(R.styleable.ComActionBar_left_text_color,
                 Utils.getColorResources(context, R.color.cab_text_color_default));
-        mLeftTextSize = ta.getDimensionPixelSize(R.styleable.ComActionBar2_left_text_size,
+        mLeftTextSize = ta.getDimensionPixelSize(R.styleable.ComActionBar_left_text_size,
                 context.getResources().getDimensionPixelOffset(R.dimen.cab_menu_text_size_default));
-        mLeftIconWidth = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_left_icon_width, -1);
-        mLeftIconHeight = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_left_icon_height, -1);
-        mLeftIconDrawable = ta.getDrawable(R.styleable.ComActionBar2_left_icon_drawable);
-        mIsLeftClickToFinish = ta.getBoolean(R.styleable.ComActionBar2_left_click_to_finish, false);
-        mTitleText = ta.getString(R.styleable.ComActionBar2_title_text);
-        mTitleTextColor = ta.getColor(R.styleable.ComActionBar2_title_text_color,
+        mLeftIconWidth = ta.getDimensionPixelOffset(R.styleable.ComActionBar_left_icon_width, -1);
+        mLeftIconHeight = ta.getDimensionPixelOffset(R.styleable.ComActionBar_left_icon_height, -1);
+        mLeftIconDrawable = ta.getDrawable(R.styleable.ComActionBar_left_icon_drawable);
+        mIsLeftClickToFinish = ta.getBoolean(R.styleable.ComActionBar_left_click_to_finish, false);
+        mTitleText = ta.getString(R.styleable.ComActionBar_title_text);
+        mTitleTextColor = ta.getColor(R.styleable.ComActionBar_title_text_color,
                 Utils.getColorResources(context, R.color.cab_text_color_default));
-        mTitleTextSize = ta.getDimensionPixelSize(R.styleable.ComActionBar2_title_text_size,
+        mTitleTextSize = ta.getDimensionPixelSize(R.styleable.ComActionBar_title_text_size,
                 context.getResources().getDimensionPixelOffset(R.dimen.cab_title_text_size_default));
-        mRightText01 = ta.getString(R.styleable.ComActionBar2_right_text01);
-        mRightTextColor01 = ta.getColor(R.styleable.ComActionBar2_right_text_color01,
+        mRightText01 = ta.getString(R.styleable.ComActionBar_right_text01);
+        mRightTextColor01 = ta.getColor(R.styleable.ComActionBar_right_text_color01,
                 Utils.getColorResources(context, R.color.cab_text_color_default));
-        mRightTextSize01 = ta.getDimensionPixelSize(R.styleable.ComActionBar2_right_text_size01,
+        mRightTextSize01 = ta.getDimensionPixelSize(R.styleable.ComActionBar_right_text_size01,
                 context.getResources().getDimensionPixelOffset(R.dimen.cab_menu_text_size_default));
-        mRightIconWidth01 = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_right_icon_width01, -1);
-        mRightIconHeight01 = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_right_icon_height01, -1);
-        mRightIconDrawable01 = ta.getDrawable(R.styleable.ComActionBar2_right_icon_drawable01);
-        mRightText02 = ta.getString(R.styleable.ComActionBar2_right_text02);
-        mRightTextColor02 = ta.getColor(R.styleable.ComActionBar2_right_text_color02,
+        mRightIconWidth01 = ta.getDimensionPixelOffset(R.styleable.ComActionBar_right_icon_width01, -1);
+        mRightIconHeight01 = ta.getDimensionPixelOffset(R.styleable.ComActionBar_right_icon_height01, -1);
+        mRightIconDrawable01 = ta.getDrawable(R.styleable.ComActionBar_right_icon_drawable01);
+        mRightText02 = ta.getString(R.styleable.ComActionBar_right_text02);
+        mRightTextColor02 = ta.getColor(R.styleable.ComActionBar_right_text_color02,
                 Utils.getColorResources(context, R.color.cab_text_color_default));
-        mRightTextSize02 = ta.getDimensionPixelSize(R.styleable.ComActionBar2_right_text_size02,
+        mRightTextSize02 = ta.getDimensionPixelSize(R.styleable.ComActionBar_right_text_size02,
                 context.getResources().getDimensionPixelOffset(R.dimen.cab_menu_text_size_default));
-        mRightIconWidth02 = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_right_icon_width02, -1);
-        mRightIconHeight02 = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_right_icon_height02, -1);
-        mRightIconDrawable02 = ta.getDrawable(R.styleable.ComActionBar2_right_icon_drawable02);
-        mIsShowDividerLine = ta.getBoolean(R.styleable.ComActionBar2_show_divider_line, true);
-        mDividerLineColor = ta.getColor(R.styleable.ComActionBar2_divider_line_color,
+        mRightIconWidth02 = ta.getDimensionPixelOffset(R.styleable.ComActionBar_right_icon_width02, -1);
+        mRightIconHeight02 = ta.getDimensionPixelOffset(R.styleable.ComActionBar_right_icon_height02, -1);
+        mRightIconDrawable02 = ta.getDrawable(R.styleable.ComActionBar_right_icon_drawable02);
+        mIsShowDividerLine = ta.getBoolean(R.styleable.ComActionBar_show_divider_line, true);
+        mDividerLineColor = ta.getColor(R.styleable.ComActionBar_divider_line_color,
                 Utils.getColorResources(context, R.color.cab_divider_line_default));
-        mDividerLineHeight = ta.getDimensionPixelSize(R.styleable.ComActionBar2_divider_line_height,
+        mDividerLineHeight = ta.getDimensionPixelSize(R.styleable.ComActionBar_divider_line_height,
                 context.getResources().getDimensionPixelOffset(R.dimen.cab_divider_line_height_default));
-        mChildVerticalPadding = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_child_vertical_padding,
+        mChildVerticalPadding = ta.getDimensionPixelOffset(R.styleable.ComActionBar_child_vertical_padding,
                 context.getResources().getDimensionPixelOffset(R.dimen.cab_child_padding_vertical_default));
-        mChildHorizontalPadding = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_child_horizontal_padding,
+        mChildHorizontalPadding = ta.getDimensionPixelOffset(R.styleable.ComActionBar_child_horizontal_padding,
                 context.getResources().getDimensionPixelOffset(R.dimen.cab_child_padding_horizontal_default));
-        mDrawablePadding = ta.getDimensionPixelOffset(R.styleable.ComActionBar2_android_drawablePadding, 0);
+        mDrawablePadding = ta.getDimensionPixelOffset(R.styleable.ComActionBar_android_drawablePadding, 0);
 
 
         //初始化设置

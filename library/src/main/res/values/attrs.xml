@@ -1,6 +1,6 @@
 <resources>
 
-    <declare-styleable name="ComActionBar2">
+    <declare-styleable name="ComActionBar">
         <attr name="ripple_effect" format="boolean" />
         <attr name="pressed_color" format="color" />
         <attr name="left_text" format="string" />
