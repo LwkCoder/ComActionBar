@@ -14,9 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -28,10 +32,17 @@ import androidx.annotation.StringRes;
  */
 public class ComActionBar extends ViewGroup
 {
-    private static final int ICON_DIRECTION_START = 0;
-    private static final int ICON_DIRECTION_TOP = 1;
-    private static final int ICON_DIRECTION_END = 2;
-    private static final int ICON_DIRECTION_BOTTOM = 3;
+    public static final int ICON_DIRECTION_START = 0;
+    public static final int ICON_DIRECTION_TOP = 1;
+    public static final int ICON_DIRECTION_END = 2;
+    public static final int ICON_DIRECTION_BOTTOM = 3;
+
+    @IntDef({ICON_DIRECTION_START, ICON_DIRECTION_TOP, ICON_DIRECTION_END, ICON_DIRECTION_BOTTOM})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface IconDireciton
+    {
+
+    }
 
     private TextView mTvLeft;
     private TextView mTvTitle;
@@ -648,6 +659,36 @@ public class ComActionBar extends ViewGroup
         createChildViews(getContext());
         initUi();
         requestLayout();
+    }
+
+    public int getLeftIconDirection()
+    {
+        return mLeftIconDirection;
+    }
+
+    public void setLeftIconDirection(@IconDireciton int direction)
+    {
+        this.mLeftIconDirection = direction;
+    }
+
+    public int getRightIconDirection01()
+    {
+        return mRightIconDirection01;
+    }
+
+    public void setRightIconDirection01(@IconDireciton int direction)
+    {
+        this.mRightIconDirection01 = direction;
+    }
+
+    public int getRightIconDirection02()
+    {
+        return mRightIconDirection02;
+    }
+
+    public void setRightIconDirection02(@IconDireciton int direction)
+    {
+        this.mRightIconDirection02 = direction;
     }
 
     public TextView getTvLeft()
