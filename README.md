@@ -13,7 +13,7 @@ ComActionBar：通用的自定义ActionBar
 ```
     #last-version请查看上面的最新版本号
 
-    #2.0.0版本以上引用方式
+    #2.0.0以上引用方式
     implemetation 'com.lwkandroid.library:ComActionBar:last-version'
 ```
 <br/>
@@ -46,6 +46,14 @@ ComActionBar：通用的自定义ActionBar
         //左侧icon图片
         <attr name="left_icon_drawable" format="reference" />
 
+        //左侧icon方向，默认start，2.1.0版本新增
+        <attr name="left_icon_direction">
+            <enum name="start" value="0" />
+            <enum name="top" value="1" />
+            <enum name="end" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+
         //左侧点击后是否为关闭Activity，默认false
         <attr name="left_click_to_finish" format="boolean" />
 
@@ -76,6 +84,14 @@ ComActionBar：通用的自定义ActionBar
         //右侧第一个icon图片
         <attr name="right_icon_drawable01" format="reference" />
 
+        //右侧第一个icon方向，默认start，2.1.0版本新增
+        <attr name="right_icon_direction01">
+            <enum name="start" value="0" />
+            <enum name="top" value="1" />
+            <enum name="end" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+
         //右侧第二个文字内容
         <attr name="right_text02" format="string" />
 
@@ -93,6 +109,14 @@ ComActionBar：通用的自定义ActionBar
 
         //右侧第二个icon图片
         <attr name="right_icon_drawable02" format="reference" />
+
+        //右侧第二个icon方向，默认start，2.1.0版本新增
+        <attr name="right_icon_direction02">
+            <enum name="start" value="0" />
+            <enum name="top" value="1" />
+            <enum name="end" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
 
         //是否显示底部分割线，默认true
         <attr name="show_divider_line" format="boolean" />

@@ -6,12 +6,12 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
@@ -26,10 +26,20 @@ import androidx.annotation.StringRes;
  * @author:
  * @date: 2021/5/10 10:17
  */
-public class ComActionBar extends FrameLayout
+public class ComActionBar extends ViewGroup
 {
-    private TextView mTvLeft, mTvTitle, mTvRight01, mTvRight02;
+    private static final int ICON_DIRECTION_START = 0;
+    private static final int ICON_DIRECTION_TOP = 1;
+    private static final int ICON_DIRECTION_END = 2;
+    private static final int ICON_DIRECTION_BOTTOM = 3;
+
+    private TextView mTvLeft;
+    private TextView mTvTitle;
+    private TextView mTvRight01;
+    private TextView mTvRight02;
     private View mViewDivider;
+
+    private IComActionBarChildCreation mChildCreationImpl;
 
     private boolean mIsRippleEffect;
     private int mPressedColor;
@@ -39,6 +49,7 @@ public class ComActionBar extends FrameLayout
     private int mLeftIconWidth;
     private int mLeftIconHeight;
     private Drawable mLeftIconDrawable;
+    private int mLeftIconDirection;
     private boolean mIsLeftClickToFinish;
     private String mTitleText;
     private int mTitleTextColor;
@@ -49,12 +60,14 @@ public class ComActionBar extends FrameLayout
     private int mRightIconWidth01;
     private int mRightIconHeight01;
     private Drawable mRightIconDrawable01;
+    private int mRightIconDirection01;
     private String mRightText02;
     private int mRightTextColor02;
     private int mRightTextSize02;
     private int mRightIconWidth02;
     private int mRightIconHeight02;
     private Drawable mRightIconDrawable02;
+    private int mRightIconDirection02;
     private boolean mIsShowDividerLine;
     private int mDividerLineColor;
     private int mDividerLineHeight;
@@ -84,12 +97,7 @@ public class ComActionBar extends FrameLayout
 
     private void init(Context context, AttributeSet attrs)
     {
-        inflate(context, R.layout.layout_action_bar_content, this);
-        mTvLeft = findViewById(R.id.tv_actionbar_left);
-        mTvTitle = findViewById(R.id.tv_actionbar_title);
-        mTvRight01 = findViewById(R.id.tv_actionbar_right01);
-        mTvRight02 = findViewById(R.id.tv_actionbar_right02);
-        mViewDivider = findViewById(R.id.view_actionbar_divider);
+        createChildViews(context);
 
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComActionBar);
         mIsRippleEffect = ta.getBoolean(R.styleable.ComActionBar_ripple_effect, true);
@@ -103,6 +111,7 @@ public class ComActionBar extends FrameLayout
         mLeftIconWidth = ta.getDimensionPixelOffset(R.styleable.ComActionBar_left_icon_width, -1);
         mLeftIconHeight = ta.getDimensionPixelOffset(R.styleable.ComActionBar_left_icon_height, -1);
         mLeftIconDrawable = ta.getDrawable(R.styleable.ComActionBar_left_icon_drawable);
+        mLeftIconDirection = ta.getInt(R.styleable.ComActionBar_left_icon_direction, ICON_DIRECTION_START);
         mIsLeftClickToFinish = ta.getBoolean(R.styleable.ComActionBar_left_click_to_finish, false);
         mTitleText = ta.getString(R.styleable.ComActionBar_title_text);
         mTitleTextColor = ta.getColor(R.styleable.ComActionBar_title_text_color,
@@ -117,6 +126,7 @@ public class ComActionBar extends FrameLayout
         mRightIconWidth01 = ta.getDimensionPixelOffset(R.styleable.ComActionBar_right_icon_width01, -1);
         mRightIconHeight01 = ta.getDimensionPixelOffset(R.styleable.ComActionBar_right_icon_height01, -1);
         mRightIconDrawable01 = ta.getDrawable(R.styleable.ComActionBar_right_icon_drawable01);
+        mRightIconDirection01 = ta.getInt(R.styleable.ComActionBar_right_icon_direction01, ICON_DIRECTION_START);
         mRightText02 = ta.getString(R.styleable.ComActionBar_right_text02);
         mRightTextColor02 = ta.getColor(R.styleable.ComActionBar_right_text_color02,
                 Utils.getColorResources(context, R.color.cab_text_color_default));
@@ -125,6 +135,7 @@ public class ComActionBar extends FrameLayout
         mRightIconWidth02 = ta.getDimensionPixelOffset(R.styleable.ComActionBar_right_icon_width02, -1);
         mRightIconHeight02 = ta.getDimensionPixelOffset(R.styleable.ComActionBar_right_icon_height02, -1);
         mRightIconDrawable02 = ta.getDrawable(R.styleable.ComActionBar_right_icon_drawable02);
+        mRightIconDirection02 = ta.getInt(R.styleable.ComActionBar_right_icon_direction02, ICON_DIRECTION_START);
         mIsShowDividerLine = ta.getBoolean(R.styleable.ComActionBar_show_divider_line, true);
         mDividerLineColor = ta.getColor(R.styleable.ComActionBar_divider_line_color,
                 Utils.getColorResources(context, R.color.cab_divider_line_default));
@@ -136,7 +147,33 @@ public class ComActionBar extends FrameLayout
                 context.getResources().getDimensionPixelOffset(R.dimen.cab_child_padding_horizontal_default));
         mDrawablePadding = ta.getDimensionPixelOffset(R.styleable.ComActionBar_android_drawablePadding, 0);
 
+        initUi();
+    }
 
+    private void createChildViews(Context context)
+    {
+        removeAllViews();
+
+        if (mChildCreationImpl == null)
+        {
+            mChildCreationImpl = new DefaultComActionBarChildCreationImpl();
+        }
+
+        mTvLeft = mChildCreationImpl.createLeftTextView(context);
+        mTvTitle = mChildCreationImpl.createTitleTextView(context);
+        mTvRight01 = mChildCreationImpl.createRightTextView01(context);
+        mTvRight02 = mChildCreationImpl.createRightTextView02(context);
+        mViewDivider = mChildCreationImpl.createDividerLineView(context);
+
+        addView(mTvLeft);
+        addView(mTvTitle);
+        addView(mTvRight01);
+        addView(mTvRight02);
+        addView(mViewDivider);
+    }
+
+    private void initUi()
+    {
         //初始化设置
         setLeftText(mLeftText);
         setLeftTextColor(mLeftTextColor);
@@ -144,7 +181,10 @@ public class ComActionBar extends FrameLayout
         updateLeftIcon();
         setIsLeftClickToFinish(mIsLeftClickToFinish);
 
-        mTvTitle.setSelected(true);
+        if (mTvTitle != null)
+        {
+            mTvTitle.setSelected(true);
+        }
         setTitleText(mTitleText);
         setTitleTextColor(mTitleTextColor);
         setTitleTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
@@ -172,29 +212,72 @@ public class ComActionBar extends FrameLayout
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int measuredHeight = getMeasuredHeight();
-        int leftMeasuredWidth = mTvLeft.getMeasuredWidth();
-        int rightMeasuredWidth01 = mTvRight01.getMeasuredWidth();
-        int rightMeasuredWidth02 = mTvRight02.getMeasuredWidth();
+        if (mTvLeft == null || mTvTitle == null || mTvRight01 == null || mTvRight02 == null)
+        {
+            return;
+        }
 
-        //设置各TextView高度一致
-        ViewGroup.LayoutParams layoutParams1 = mTvLeft.getLayoutParams();
-        layoutParams1.height = measuredHeight;
-        mTvLeft.setLayoutParams(layoutParams1);
-        ViewGroup.LayoutParams layoutParams2 = mTvTitle.getLayoutParams();
-        layoutParams2.height = measuredHeight;
-        mTvTitle.setLayoutParams(layoutParams2);
-        ViewGroup.LayoutParams layoutParams3 = mTvRight01.getLayoutParams();
-        layoutParams3.height = measuredHeight;
-        mTvRight01.setLayoutParams(layoutParams3);
-        ViewGroup.LayoutParams layoutParams4 = mTvRight02.getLayoutParams();
-        layoutParams4.height = measuredHeight;
-        mTvRight02.setLayoutParams(layoutParams4);
-        //设置标题的Margin
-        MarginLayoutParams titleLayoutParams = (MarginLayoutParams) mTvTitle.getLayoutParams();
-        titleLayoutParams.leftMargin = leftMeasuredWidth;
-        titleLayoutParams.rightMargin = rightMeasuredWidth01 + rightMeasuredWidth02;
-        mTvTitle.setLayoutParams(titleLayoutParams);
+        int measureWidth = MeasureSpec.getSize(widthMeasureSpec);
+
+        mTvLeft.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+        int leftMeasuredWidth = mTvLeft.getMeasuredWidth();
+        int leftMeasuredHeight = mTvLeft.getMeasuredHeight();
+
+        mTvTitle.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+        int titleMeasuredHeight = mTvTitle.getMeasuredHeight();
+
+        mTvRight01.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+        int rightMeasuredWidth01 = mTvRight01.getMeasuredWidth();
+        int rightMeasuredHeight01 = mTvRight01.getMeasuredHeight();
+
+        mTvRight02.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+        int rightMeasuredWidth02 = mTvRight02.getMeasuredWidth();
+        int rightMeasuredHeight02 = mTvRight02.getMeasuredHeight();
+
+        int maxChildHeight = Math.max(leftMeasuredHeight, titleMeasuredHeight);
+        maxChildHeight = Math.max(maxChildHeight, rightMeasuredHeight01);
+        maxChildHeight = Math.max(maxChildHeight, rightMeasuredHeight02);
+
+        //        Log.e("ActionBar", "measureWidth=" + measureWidth + "\n" +
+        //                "leftMeasuredWidth=" + leftMeasuredWidth + "\n"+
+        //                "leftMeasuredHeight=" + leftMeasuredHeight + "\n"+
+        //                "titleMeasuredHeight=" + titleMeasuredHeight + "\n"+
+        //                "rightMeasuredWidth01=" + rightMeasuredWidth01 + "\n"+
+        //                "rightMeasuredHeight01=" + rightMeasuredHeight01 + "\n"+
+        //                "rightMeasuredWidth02=" + rightMeasuredWidth02 + "\n"+
+        //                "rightMeasuredHeight02=" + rightMeasuredHeight02 + "\n"+
+        //                "maxChildHeight=" + maxChildHeight + "\n"
+        //        );
+
+        measureChildWithExactlyMode(mTvLeft, leftMeasuredWidth, maxChildHeight);
+        measureChildWithExactlyMode(mTvRight01, rightMeasuredWidth01, maxChildHeight);
+        measureChildWithExactlyMode(mTvRight02, rightMeasuredWidth02, maxChildHeight);
+        measureChildWithExactlyMode(mTvTitle, measureWidth - 2 * Math.max(leftMeasuredWidth, rightMeasuredWidth01 + rightMeasuredWidth02), maxChildHeight);
+        measureChildWithExactlyMode(mViewDivider, measureWidth, mDividerLineHeight);
+
+        setMeasuredDimension(measureWidth, maxChildHeight + mDividerLineHeight);
+    }
+
+    private void measureChildWithExactlyMode(View childView, int width, int height)
+    {
+        int childWidthSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
+        int childHeightSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        childView.measure(childWidthSpec, childHeightSpec);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b)
+    {
+        int totalWidth = getMeasuredWidth();
+        int titleLeftStart = Math.max(mTvLeft.getMeasuredWidth(), mTvRight01.getMeasuredWidth() + mTvRight02.getMeasuredWidth());
+        int rightLeftStart01 = totalWidth - mTvRight01.getMeasuredWidth();
+        int rightLeftStart02 = totalWidth - mTvRight02.getMeasuredWidth() - mTvRight01.getMeasuredWidth();
+
+        mTvLeft.layout(0, 0, mTvLeft.getMeasuredWidth(), mTvLeft.getMeasuredHeight());
+        mTvTitle.layout(titleLeftStart, 0, titleLeftStart + mTvTitle.getMeasuredWidth(), mTvTitle.getMeasuredHeight());
+        mTvRight01.layout(rightLeftStart01, 0, rightLeftStart01 + mTvRight01.getMeasuredWidth(), mTvRight01.getMeasuredHeight());
+        mTvRight02.layout(rightLeftStart02, 0, rightLeftStart02 + mTvRight02.getMeasuredWidth(), mTvRight02.getMeasuredHeight());
+        mViewDivider.layout(0, mTvLeft.getMeasuredHeight(), totalWidth, mTvLeft.getMeasuredHeight() + mViewDivider.getMeasuredHeight());
     }
 
     public void setRippleEffect(boolean enable)
@@ -223,7 +306,10 @@ public class ComActionBar extends FrameLayout
     public void setLeftText(String text)
     {
         this.mLeftText = text;
-        mTvLeft.setText(mLeftText);
+        if (mTvLeft != null)
+        {
+            mTvLeft.setText(mLeftText);
+        }
     }
 
     public void setLeftTextColorResId(@ColorRes int resId)
@@ -234,13 +320,19 @@ public class ComActionBar extends FrameLayout
     public void setLeftTextColor(@ColorInt int color)
     {
         this.mLeftTextColor = color;
-        mTvLeft.setTextColor(mLeftTextColor);
+        if (mTvLeft != null)
+        {
+            mTvLeft.setTextColor(mLeftTextColor);
+        }
     }
 
     public void setLeftTextSize(int unit, int size)
     {
         this.mLeftTextSize = (int) TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
-        mTvLeft.setTextSize(unit, mLeftTextSize);
+        if (mTvLeft != null)
+        {
+            mTvLeft.setTextSize(unit, mLeftTextSize);
+        }
     }
 
     public void setLeftIconWidth(int unit, int size)
@@ -273,10 +365,16 @@ public class ComActionBar extends FrameLayout
         {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             {
-                mTvLeft.setOnClickListener(v -> ((Activity) getContext()).finishAfterTransition());
+                if (mTvLeft != null)
+                {
+                    mTvLeft.setOnClickListener(v -> ((Activity) getContext()).finishAfterTransition());
+                }
             } else
             {
-                mTvLeft.setOnClickListener(v -> ((Activity) getContext()).finish());
+                if (mTvLeft != null)
+                {
+                    mTvLeft.setOnClickListener(v -> ((Activity) getContext()).finish());
+                }
             }
         }
     }
@@ -289,7 +387,10 @@ public class ComActionBar extends FrameLayout
     public void setTitleText(String text)
     {
         this.mTitleText = text;
-        mTvTitle.setText(mTitleText);
+        if (mTvTitle != null)
+        {
+            mTvTitle.setText(mTitleText);
+        }
     }
 
     public void setTitleTextColorResId(@ColorRes int resId)
@@ -300,13 +401,19 @@ public class ComActionBar extends FrameLayout
     public void setTitleTextColor(@ColorInt int color)
     {
         this.mTitleTextColor = color;
-        mTvTitle.setTextColor(mTitleTextColor);
+        if (mTvTitle != null)
+        {
+            mTvTitle.setTextColor(mTitleTextColor);
+        }
     }
 
     public void setTitleTextSize(int unit, int size)
     {
         this.mTitleTextSize = (int) TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
-        mTvTitle.setTextSize(unit, mTitleTextSize);
+        if (mTvTitle != null)
+        {
+            mTvTitle.setTextSize(unit, mTitleTextSize);
+        }
     }
 
     public void setRightText01(@StringRes int resId)
@@ -317,7 +424,10 @@ public class ComActionBar extends FrameLayout
     public void setRightText01(String text)
     {
         this.mRightText01 = text;
-        mTvRight01.setText(mRightText01);
+        if (mTvRight01 != null)
+        {
+            mTvRight01.setText(mRightText01);
+        }
     }
 
     public void setRightTextColorResId01(@ColorRes int resId)
@@ -328,13 +438,19 @@ public class ComActionBar extends FrameLayout
     public void setRightTextColor01(@ColorInt int color)
     {
         this.mRightTextColor01 = color;
-        mTvRight01.setTextColor(mRightTextColor01);
+        if (mTvRight01 != null)
+        {
+            mTvRight01.setTextColor(mRightTextColor01);
+        }
     }
 
     public void setRightTextSize01(int unit, int size)
     {
         this.mRightTextSize01 = (int) TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
-        mTvRight01.setTextSize(unit, mRightTextSize01);
+        if (mTvRight01 != null)
+        {
+            mTvRight01.setTextSize(unit, mRightTextSize01);
+        }
     }
 
     public void setRightIconWidth01(int unit, int size)
@@ -369,7 +485,10 @@ public class ComActionBar extends FrameLayout
     public void setRightText02(String text)
     {
         this.mRightText02 = text;
-        mTvRight02.setText(mRightText02);
+        if (mTvRight02 != null)
+        {
+            mTvRight02.setText(mRightText02);
+        }
     }
 
     public void setRightTextColorResId02(@ColorRes int resId)
@@ -380,13 +499,19 @@ public class ComActionBar extends FrameLayout
     public void setRightTextColor02(@ColorInt int color)
     {
         this.mRightTextColor02 = color;
-        mTvRight02.setTextColor(mRightTextColor02);
+        if (mTvRight02 != null)
+        {
+            mTvRight02.setTextColor(mRightTextColor02);
+        }
     }
 
     public void setRightTextSize02(int unit, int size)
     {
         this.mRightTextSize02 = (int) TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
-        mTvRight02.setTextSize(unit, mRightTextSize02);
+        if (mTvRight02 != null)
+        {
+            mTvRight02.setTextSize(unit, mRightTextSize02);
+        }
     }
 
     public void setRightIconWidth02(int unit, int size)
@@ -415,7 +540,10 @@ public class ComActionBar extends FrameLayout
     public void setIsShowDividerLine(boolean enable)
     {
         this.mIsShowDividerLine = enable;
-        mViewDivider.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
+        if (mViewDivider != null)
+        {
+            mViewDivider.setVisibility(enable ? View.VISIBLE : View.GONE);
+        }
     }
 
     public void setDividerLineColorResId(@ColorRes int resId)
@@ -426,15 +554,21 @@ public class ComActionBar extends FrameLayout
     public void setDividerLineColor(@ColorInt int color)
     {
         this.mDividerLineColor = color;
-        mViewDivider.setBackgroundColor(mDividerLineColor);
+        if (mViewDivider != null)
+        {
+            mViewDivider.setBackgroundColor(mDividerLineColor);
+        }
     }
 
     public void setDividerLineHeight(int unit, int size)
     {
         this.mDividerLineHeight = (int) TypedValue.applyDimension(unit, size, getResources().getDisplayMetrics());
-        ViewGroup.LayoutParams layoutParams = mViewDivider.getLayoutParams();
-        layoutParams.height = mDividerLineHeight;
-        mViewDivider.setLayoutParams(layoutParams);
+        if (mViewDivider != null)
+        {
+            ViewGroup.LayoutParams layoutParams = mViewDivider.getLayoutParams();
+            layoutParams.height = mDividerLineHeight;
+            mViewDivider.setLayoutParams(layoutParams);
+        }
     }
 
     public void setChildVerticalPadding(int unit, int size)
@@ -463,35 +597,57 @@ public class ComActionBar extends FrameLayout
             Log.e("ComActionBar", "Unable to invoke the function setLeftOnItemClickListener() after isLeftClickToFinish() enabled!");
         } else
         {
-            mTvLeft.setOnClickListener(v -> {
-                if (mLeftOnItemClickListener != null)
-                {
-                    mLeftOnItemClickListener.onActionBarItemClicked(mTvLeft.getId(), mTvLeft, mViewDivider);
-                }
-            });
+            if (mTvLeft != null)
+            {
+                mTvLeft.setOnClickListener(v -> {
+                    if (mLeftOnItemClickListener != null)
+                    {
+                        mLeftOnItemClickListener.onActionBarItemClicked(mTvLeft.getId(), mTvLeft, mViewDivider);
+                    }
+                });
+            }
         }
     }
 
     public void setRightOnItemClickListener01(OnItemClickListener listener)
     {
         this.mRightOnItemClickListener01 = listener;
-        mTvRight01.setOnClickListener(v -> {
-            if (mRightOnItemClickListener01 != null)
-            {
-                mRightOnItemClickListener01.onActionBarItemClicked(mTvRight01.getId(), mTvRight01, mViewDivider);
-            }
-        });
+        if (mTvRight01 != null)
+        {
+            mTvRight01.setOnClickListener(v -> {
+                if (mRightOnItemClickListener01 != null)
+                {
+                    mRightOnItemClickListener01.onActionBarItemClicked(mTvRight01.getId(), mTvRight01, mViewDivider);
+                }
+            });
+        }
     }
 
     public void setRightOnItemClickListener02(OnItemClickListener listener)
     {
         this.mRightOnItemClickListener02 = listener;
-        mTvRight02.setOnClickListener(v -> {
-            if (mRightOnItemClickListener02 != null)
-            {
-                mRightOnItemClickListener02.onActionBarItemClicked(mTvRight02.getId(), mTvRight02, mViewDivider);
-            }
-        });
+        if (mTvRight02 != null)
+        {
+            mTvRight02.setOnClickListener(v -> {
+                if (mRightOnItemClickListener02 != null)
+                {
+                    mRightOnItemClickListener02.onActionBarItemClicked(mTvRight02.getId(), mTvRight02, mViewDivider);
+                }
+            });
+        }
+    }
+
+    public IComActionBarChildCreation getChildCreationImpl()
+    {
+        return mChildCreationImpl;
+    }
+
+    public void setChildCreationImpl(IComActionBarChildCreation childCreation)
+    {
+        this.mChildCreationImpl = childCreation;
+        createChildViews(getContext());
+        initUi();
+        requestLayout();
     }
 
     public TextView getTvLeft()
@@ -546,10 +702,13 @@ public class ComActionBar extends FrameLayout
 
     private void updateLeftIcon()
     {
-        if (mLeftIconDrawable == null)
+        if (mTvLeft == null)
         {
-            mTvLeft.setCompoundDrawables(null, null, null, null);
-        } else
+            return;
+        }
+
+        Drawable[] drawables = mTvLeft.getCompoundDrawables();
+        if (mLeftIconDrawable != null)
         {
             if (mLeftIconWidth != -1 && mLeftIconHeight != -1)
             {
@@ -558,16 +717,20 @@ public class ComActionBar extends FrameLayout
             {
                 mLeftIconDrawable.setBounds(0, 0, mLeftIconDrawable.getIntrinsicWidth(), mLeftIconDrawable.getIntrinsicHeight());
             }
-            mTvLeft.setCompoundDrawables(mLeftIconDrawable, null, null, null);
         }
+        drawables[mLeftIconDirection] = mLeftIconDrawable;
+        mTvLeft.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
     }
 
     private void updateRightIcon01()
     {
-        if (mRightIconDrawable01 == null)
+        if (mTvRight01 == null)
         {
-            mTvRight01.setCompoundDrawables(null, null, null, null);
-        } else
+            return;
+        }
+
+        Drawable[] drawables = mTvRight01.getCompoundDrawables();
+        if (mRightIconDrawable01 != null)
         {
             if (mRightIconWidth01 != -1 && mRightIconHeight01 != -1)
             {
@@ -576,16 +739,20 @@ public class ComActionBar extends FrameLayout
             {
                 mRightIconDrawable01.setBounds(0, 0, mRightIconDrawable01.getIntrinsicWidth(), mRightIconDrawable01.getIntrinsicHeight());
             }
-            mTvRight01.setCompoundDrawables(mRightIconDrawable01, null, null, null);
         }
+        drawables[mRightIconDirection01] = mRightIconDrawable01;
+        mTvRight01.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
     }
 
     private void updateRightIcon02()
     {
-        if (mRightIconDrawable02 == null)
+        if (mTvRight02 == null)
         {
-            mTvRight02.setCompoundDrawables(null, null, null, null);
-        } else
+            return;
+        }
+
+        Drawable[] drawables = mTvRight02.getCompoundDrawables();
+        if (mRightIconDrawable02 != null)
         {
             if (mRightIconWidth02 != -1 && mRightIconHeight02 != -1)
             {
@@ -594,23 +761,57 @@ public class ComActionBar extends FrameLayout
             {
                 mRightIconDrawable02.setBounds(0, 0, mRightIconDrawable02.getIntrinsicWidth(), mRightIconDrawable02.getIntrinsicHeight());
             }
-            mTvRight02.setCompoundDrawables(mRightIconDrawable02, null, null, null);
         }
+        drawables[mRightIconDirection01] = mRightIconDrawable02;
+        mTvRight02.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
     }
 
     private void updateChildPadding()
     {
-        mTvLeft.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
-        mTvTitle.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
-        mTvRight01.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
-        mTvRight02.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
+        if (!TextUtils.isEmpty(mLeftText) || mLeftIconDrawable != null)
+        {
+            if (mTvLeft != null)
+            {
+                mTvLeft.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
+            }
+        }
+        if (!TextUtils.isEmpty(mTitleText))
+        {
+            if (mTvTitle != null)
+            {
+                mTvTitle.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
+            }
+        }
+        if (!TextUtils.isEmpty(mRightText01) || mRightIconDrawable01 != null)
+        {
+            if (mTvRight01 != null)
+            {
+                mTvRight01.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
+            }
+        }
+        if (!TextUtils.isEmpty(mRightText02) || mRightIconDrawable02 != null)
+        {
+            if (mTvRight02 != null)
+            {
+                mTvRight02.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
+            }
+        }
     }
 
     private void updateDrawablePadding()
     {
-        mTvLeft.setCompoundDrawablePadding(mDrawablePadding);
-        mTvRight01.setCompoundDrawablePadding(mDrawablePadding);
-        mTvRight02.setCompoundDrawablePadding(mDrawablePadding);
+        if (mTvLeft != null)
+        {
+            mTvLeft.setCompoundDrawablePadding(mDrawablePadding);
+        }
+        if (mTvRight01 != null)
+        {
+            mTvRight01.setCompoundDrawablePadding(mDrawablePadding);
+        }
+        if (mTvRight02 != null)
+        {
+            mTvRight02.setCompoundDrawablePadding(mDrawablePadding);
+        }
     }
 
 

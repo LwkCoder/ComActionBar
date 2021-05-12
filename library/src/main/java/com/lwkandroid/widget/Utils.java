@@ -43,10 +43,12 @@ final class Utils
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            view.setBackground(drawable);
+            if (view != null)
+                view.setBackground(drawable);
         } else
         {
-            view.setBackgroundDrawable(drawable);
+            if (view != null)
+                view.setBackgroundDrawable(drawable);
         }
     }
 
