@@ -39,7 +39,7 @@ public class ComActionBar extends ViewGroup
 
     @IntDef({ICON_DIRECTION_START, ICON_DIRECTION_TOP, ICON_DIRECTION_END, ICON_DIRECTION_BOTTOM})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface IconDireciton
+    public @interface IconDirection
     {
 
     }
@@ -666,7 +666,7 @@ public class ComActionBar extends ViewGroup
         return mLeftIconDirection;
     }
 
-    public void setLeftIconDirection(@IconDireciton int direction)
+    public void setLeftIconDirection(@IconDirection int direction)
     {
         this.mLeftIconDirection = direction;
     }
@@ -676,7 +676,7 @@ public class ComActionBar extends ViewGroup
         return mRightIconDirection01;
     }
 
-    public void setRightIconDirection01(@IconDireciton int direction)
+    public void setRightIconDirection01(@IconDirection int direction)
     {
         this.mRightIconDirection01 = direction;
     }
@@ -686,7 +686,7 @@ public class ComActionBar extends ViewGroup
         return mRightIconDirection02;
     }
 
-    public void setRightIconDirection02(@IconDireciton int direction)
+    public void setRightIconDirection02(@IconDirection int direction)
     {
         this.mRightIconDirection02 = direction;
     }
