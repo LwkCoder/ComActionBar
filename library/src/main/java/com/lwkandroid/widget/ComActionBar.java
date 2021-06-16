@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -809,33 +808,21 @@ public class ComActionBar extends ViewGroup
 
     private void updateChildPadding()
     {
-        if (!TextUtils.isEmpty(mLeftText) || mLeftIconDrawable != null)
+        if (mTvLeft != null)
         {
-            if (mTvLeft != null)
-            {
-                mTvLeft.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
-            }
+            mTvLeft.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
         }
-        if (!TextUtils.isEmpty(mTitleText))
+        if (mTvTitle != null)
         {
-            if (mTvTitle != null)
-            {
-                mTvTitle.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
-            }
+            mTvTitle.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
         }
-        if (!TextUtils.isEmpty(mRightText01) || mRightIconDrawable01 != null)
+        if (mTvRight01 != null)
         {
-            if (mTvRight01 != null)
-            {
-                mTvRight01.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
-            }
+            mTvRight01.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
         }
-        if (!TextUtils.isEmpty(mRightText02) || mRightIconDrawable02 != null)
+        if (mTvRight02 != null)
         {
-            if (mTvRight02 != null)
-            {
-                mTvRight02.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
-            }
+            mTvRight02.setPadding(mChildHorizontalPadding, mChildVerticalPadding, mChildHorizontalPadding, mChildVerticalPadding);
         }
     }
 
