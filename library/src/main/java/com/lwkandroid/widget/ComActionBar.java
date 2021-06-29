@@ -216,6 +216,8 @@ public class ComActionBar extends ViewGroup
         updateRippleEffect();
         updateChildPadding();
         updateDrawablePadding();
+
+        setClipToPadding(false);
     }
 
     @Override
@@ -249,23 +251,28 @@ public class ComActionBar extends ViewGroup
         maxChildHeight = Math.max(maxChildHeight, rightMeasuredHeight02);
 
         //        Log.e("ActionBar", "measureWidth=" + measureWidth + "\n" +
-        //                "leftMeasuredWidth=" + leftMeasuredWidth + "\n"+
-        //                "leftMeasuredHeight=" + leftMeasuredHeight + "\n"+
-        //                "titleMeasuredHeight=" + titleMeasuredHeight + "\n"+
-        //                "rightMeasuredWidth01=" + rightMeasuredWidth01 + "\n"+
-        //                "rightMeasuredHeight01=" + rightMeasuredHeight01 + "\n"+
-        //                "rightMeasuredWidth02=" + rightMeasuredWidth02 + "\n"+
-        //                "rightMeasuredHeight02=" + rightMeasuredHeight02 + "\n"+
+        //                "getPaddingLeft=" + getPaddingLeft() + "\n" +
+        //                "getPaddingRight=" + getPaddingRight() + "\n" +
+        //                "getPaddingTop=" + getPaddingTop() + "\n" +
+        //                "getPaddingBottom=" + getPaddingBottom() + "\n" +
+        //                "leftMeasuredWidth=" + leftMeasuredWidth + "\n" +
+        //                "leftMeasuredHeight=" + leftMeasuredHeight + "\n" +
+        //                "titleMeasuredHeight=" + titleMeasuredHeight + "\n" +
+        //                "rightMeasuredWidth01=" + rightMeasuredWidth01 + "\n" +
+        //                "rightMeasuredHeight01=" + rightMeasuredHeight01 + "\n" +
+        //                "rightMeasuredWidth02=" + rightMeasuredWidth02 + "\n" +
+        //                "rightMeasuredHeight02=" + rightMeasuredHeight02 + "\n" +
         //                "maxChildHeight=" + maxChildHeight + "\n"
         //        );
 
         measureChildWithExactlyMode(mTvLeft, leftMeasuredWidth, maxChildHeight);
         measureChildWithExactlyMode(mTvRight01, rightMeasuredWidth01, maxChildHeight);
         measureChildWithExactlyMode(mTvRight02, rightMeasuredWidth02, maxChildHeight);
-        measureChildWithExactlyMode(mTvTitle, measureWidth - 2 * Math.max(leftMeasuredWidth, rightMeasuredWidth01 + rightMeasuredWidth02), maxChildHeight);
+        measureChildWithExactlyMode(mTvTitle, measureWidth - 2 * Math.max(leftMeasuredWidth + getPaddingLeft(),
+                rightMeasuredWidth01 + rightMeasuredWidth02 + getPaddingRight()), maxChildHeight);
         measureChildWithExactlyMode(mViewDivider, measureWidth, mDividerLineHeight);
 
-        setMeasuredDimension(measureWidth, maxChildHeight + mDividerLineHeight);
+        setMeasuredDimension(measureWidth, maxChildHeight + mDividerLineHeight + getPaddingTop() + getPaddingBottom());
     }
 
     private void measureChildWithExactlyMode(View childView, int width, int height)
@@ -279,15 +286,24 @@ public class ComActionBar extends ViewGroup
     protected void onLayout(boolean changed, int l, int t, int r, int b)
     {
         int totalWidth = getMeasuredWidth();
-        int titleLeftStart = Math.max(mTvLeft.getMeasuredWidth(), mTvRight01.getMeasuredWidth() + mTvRight02.getMeasuredWidth());
-        int rightLeftStart01 = totalWidth - mTvRight01.getMeasuredWidth();
-        int rightLeftStart02 = totalWidth - mTvRight02.getMeasuredWidth() - mTvRight01.getMeasuredWidth();
+        int totalHeight = getMeasuredHeight();
+        int titleLeftStart = Math.max(mTvLeft.getMeasuredWidth() + getPaddingLeft(), mTvRight01.getMeasuredWidth() + mTvRight02.getMeasuredWidth() + getPaddingRight());
+        int rightLeftStart01 = totalWidth - mTvRight01.getMeasuredWidth() - getPaddingRight();
+        int rightLeftStart02 = rightLeftStart01 - mTvRight02.getMeasuredWidth();
 
-        mTvLeft.layout(0, 0, mTvLeft.getMeasuredWidth(), mTvLeft.getMeasuredHeight());
-        mTvTitle.layout(titleLeftStart, 0, titleLeftStart + mTvTitle.getMeasuredWidth(), mTvTitle.getMeasuredHeight());
-        mTvRight01.layout(rightLeftStart01, 0, rightLeftStart01 + mTvRight01.getMeasuredWidth(), mTvRight01.getMeasuredHeight());
-        mTvRight02.layout(rightLeftStart02, 0, rightLeftStart02 + mTvRight02.getMeasuredWidth(), mTvRight02.getMeasuredHeight());
-        mViewDivider.layout(0, mTvLeft.getMeasuredHeight(), totalWidth, mTvLeft.getMeasuredHeight() + mViewDivider.getMeasuredHeight());
+        mTvLeft.layout(getPaddingLeft(), getPaddingTop(),
+                getPaddingLeft() + mTvLeft.getMeasuredWidth(),
+                getPaddingTop() + mTvLeft.getMeasuredHeight());
+        mTvTitle.layout(titleLeftStart, getPaddingTop(),
+                titleLeftStart + mTvTitle.getMeasuredWidth(),
+                getPaddingTop() + mTvTitle.getMeasuredHeight());
+        mTvRight01.layout(rightLeftStart01, getPaddingTop(),
+                rightLeftStart01 + mTvRight01.getMeasuredWidth(),
+                getPaddingTop() + mTvRight01.getMeasuredHeight());
+        mTvRight02.layout(rightLeftStart02, getPaddingTop(),
+                rightLeftStart02 + mTvRight02.getMeasuredWidth(),
+                getPaddingTop() + mTvRight02.getMeasuredHeight());
+        mViewDivider.layout(0, totalHeight - mViewDivider.getMeasuredHeight(), totalWidth, totalHeight);
     }
 
     public void setRippleEffect(boolean enable)

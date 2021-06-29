@@ -35,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@color/actionbar_dark"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         app:left_icon_direction="top"
         app:left_icon_drawable="@drawable/cab_left"
         app:left_icon_height="18dp"
