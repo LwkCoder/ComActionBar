@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.lwkandroid.widget.ComActionBar
+    <com.lwkandroid.widget.cab.ComActionBar
         android:id="@+id/actionBar01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         app:title_text="Title001Tll"
         app:title_text_size="14sp" />
 
-    <com.lwkandroid.widget.ComActionBar
+    <com.lwkandroid.widget.cab.ComActionBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
