@@ -1,5 +1,7 @@
 ComActionBar：通用的自定义ActionBar
 ====
+【不再维护，如有bug、需求，请自行clone源码修改】
+
 自定义ActionBar，轻量级的自定义控件
 ------
 
@@ -144,4 +146,4 @@ ComActionBar：通用的自定义ActionBar
 <br/>
 
 ### 效果图:
-![](https://github.com/Vanish136/ComActionBar/raw/master/screenshoot/sample.jpg)
+![](https://github.com/LwkCoder/ComActionBar/raw/master/screenshoot/sample.jpg)
